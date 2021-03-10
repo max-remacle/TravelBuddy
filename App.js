@@ -1,12 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useEffect,useState,} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
+import GeoLoc from "./components/GeoLoc"
+
 export default function App() {
+
   return (
     <View style={styles.container}>
-      <Text>ITS WORKING!!</Text>
-      <StatusBar style="auto" />
+      <GeoLoc />
     </View>
   );
 }
