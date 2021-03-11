@@ -1,13 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useEffect,useState,} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import useStateWithCallback from 'use-state-with-callback'
 
-import {getCityName} from '../api'
+import {getCityName, getWikiSection} from '../api'
 
 const GeoLoc= () => {
 
-  const [location,setLocation] = useState(null)
-  const [city,setCity] = useState(null)
+  const [location,setLocation] = useStateWithCallback(null, location =>{
+    if(location !=null){
+      getCityName(location)
+      .then(data =>{
+        setCity(data.results[0].locality)
+      })
+      .catch(err => console.log(err.message))
+    }
+  })
+  const [city,setCity] = useStateWithCallback(null, city =>{
+    if(city != null){
+      getWikiSection(city)
+        .then(data => console.log(data.parse.sections[0]))
+        .catch(err => console.log(err.message))
+    }
+  })
   
   
   useEffect(() =>{
@@ -16,19 +31,12 @@ const GeoLoc= () => {
         const lat = coords.latitude
         const long = coords.longitude
         setLocation(`${lat}, ${long}`)
-        console.log(location);
       },
       (err) => console.log(err),
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 2 }
     );
-    if(location != null){
-      getCityName(location)
-      .then(data =>{
-        setCity(data.results[0].locality)
-      })
-      .catch(err => console.log(err.message))
-    }
-  },[location])
+    console.log("test");
+  },[])
 
 
   return (

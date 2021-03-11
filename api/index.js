@@ -17,3 +17,20 @@ export function getCityName(location) {
     .then(res => res.data)
     .catch(err => console.log(err.message))
 }
+
+
+
+export function getWikiSection(city){
+    return axios({
+        "method":"GET",
+        "url":"https://en.wikipedia.org/w/api.php?",
+        "params":{
+            "action":"parse",
+            "format":"json",
+            "page": city,
+            "prop":"sections"
+        }
+    })
+    .then(res => res.data)
+    .catch(err => console.log(err.message))
+}
