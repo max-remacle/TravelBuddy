@@ -16,14 +16,14 @@ const GeoLoc= () => {
       .catch(err => console.log(err.message))
     }
   })
+  
   const [city,setCity] = useStateWithCallback(null, city =>{
     if(city != null){
       getWikiSection(city)
-        .then(data => console.log(data.parse.sections[0]))
+        .then(data => console.log("hello"))
         .catch(err => console.log(err.message))
     }
   })
-  
   
   useEffect(() =>{
     navigator.geolocation.getCurrentPosition(
@@ -33,7 +33,7 @@ const GeoLoc= () => {
         setLocation(`${lat}, ${long}`)
       },
       (err) => console.log(err),
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 2 }
+      { enableHighAccuracy: true, timeout: 8000, maximumAge: 2000 }
     );
     console.log("test");
   },[])

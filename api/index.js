@@ -31,6 +31,10 @@ export function getWikiSection(city){
             "prop":"sections"
         }
     })
-    .then(res => res.data)
+    .then(res => {
+        const sections = res.data.parse.sections
+        console.log(sections.filter((s) => s["anchor"].includes('History')))
+
+    })
     .catch(err => console.log(err.message))
 }
